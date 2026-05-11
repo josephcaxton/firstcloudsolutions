@@ -20,11 +20,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'First Cloud Solutions – Senior AWS Cloud Consulting',
+    default: 'First Cloud Solutions – AWS Cloud Consulting',
     template: '%s | First Cloud Solutions',
   },
   description:
-    'Senior AWS Cloud and DevOps consulting for mid-size and large organisations. Cloud security transformation, large-scale migrations, Kubernetes platform engineering, and AI/ML integration on AWS.',
+    'AWS Cloud and DevOps consulting for mid-size and large organisations. Cloud security transformation, large-scale migrations, Kubernetes platform engineering, and AI/ML integration on AWS.',
   keywords: [
     'AWS consulting',
     'cloud security',
@@ -44,15 +44,15 @@ export const metadata: Metadata = {
     locale: 'en_GB',
     url: 'https://www.firstcloudsolutions.net',
     siteName: 'First Cloud Solutions',
-    title: 'First Cloud Solutions – Senior AWS Cloud Consulting',
+    title: 'First Cloud Solutions – AWS Cloud Consulting',
     description:
-      'Senior AWS Cloud and DevOps consulting. Eight years of enterprise delivery across financial services, media, and technology.',
+      'AWS Cloud and DevOps consulting. Over ten years of enterprise delivery across financial services, media, and technology.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'First Cloud Solutions – Senior AWS Cloud Consulting',
+    title: 'First Cloud Solutions – AWS Cloud Consulting',
     description:
-      'Senior AWS consulting for complex cloud transformation, security posture improvement, and AI-native architecture.',
+      'AWS consulting for complex cloud transformation, security posture improvement, and AI-native architecture.',
   },
   robots: {
     index: true,

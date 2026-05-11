@@ -89,8 +89,8 @@ export default function Home() {
             Where <em>cloud security</em> meets delivery at scale
           </h1>
           <p className={styles.heroSub}>
-            Senior AWS consulting for organisations navigating complex cloud transformation,
-            security posture improvement, and AI-native architecture — delivered with eight
+            AWS consulting for organisations navigating complex cloud transformation,
+            security posture improvement, and AI-native architecture — delivered with over ten
             years of enterprise-grade rigour.
           </p>
           <div className={styles.heroActions}>
@@ -101,7 +101,7 @@ export default function Home() {
 
         <div className={styles.heroRight}>
           <div className={styles.statCard}>
-            <div className={styles.statNum}>8+</div>
+            <div className={styles.statNum}>10+</div>
             <div className={styles.statLabel}>
               <strong>Years of enterprise cloud delivery</strong>
               Financial services, media, technology, and public sector
@@ -169,7 +169,7 @@ export default function Home() {
             </div>
             <div className={`${styles.aboutBody} reveal`}>
               <p>
-                I&apos;m a Senior AWS Cloud and DevOps Engineer with over eight years of experience delivering
+                I&apos;m an AWS Cloud and DevOps Engineer subject matter expert with over ten years of experience delivering
                 cloud transformation across financial services, media, and technology. I founded First Cloud
                 Solutions to bring that enterprise-grade rigour directly to mid-size and large organisations
                 who need a trusted technical partner — not a generic consultancy.
