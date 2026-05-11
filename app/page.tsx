@@ -169,9 +169,9 @@ export default function Home() {
             </div>
             <div className={`${styles.aboutBody} reveal`}>
               <p>
-                I&apos;m an AWS Cloud and DevOps Engineer subject matter expert with over ten years of experience delivering
+                I am a Subject Matter Expert (SME) in AWS Cloud and DevOps with over ten years of experience delivering
                 cloud transformation across financial services, media, and technology. I founded First Cloud
-                Solutions to bring that enterprise-grade rigour directly to mid-size and large organisations
+                Solutions to bring that enterprise grade rigour directly to mid-size and large organisations
                 who need a trusted technical partner — not a generic consultancy.
               </p>
               <p>
@@ -182,7 +182,7 @@ export default function Home() {
               </p>
               <p>
                 At Barclaycard, I built AI-augmented data pipelines using AWS Bedrock, SageMaker, and RAG
-                architecture directly into a mission-critical payment gateway. At eBay Kleinanzeigen via
+                architecture directly into a mission critical payment gateway. At eBay Kleinanzeigen via
                 Deloitte, I led the migration of 60+ applications from three European data centres into AWS,
                 maintaining 99.9% availability throughout. At Barclays Bank, I delivered SOC2 audit readiness
                 and AWS Control Tower with OKTA integration across the enterprise.
