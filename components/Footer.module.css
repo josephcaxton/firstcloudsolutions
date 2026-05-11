@@ -1,0 +1,52 @@
+.footer {
+  background: var(--ink);
+  color: rgba(255, 255, 255, 0.45);
+  padding: 2.5rem var(--pad);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+}
+
+.logo {
+  font-family: var(--ff-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.mid {
+  flex: 1;
+  text-align: center;
+  min-width: 200px;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.links a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.links a:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 600px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+  }
+  .mid { text-align: center; }
+  .links { justify-content: center; }
+}
