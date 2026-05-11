@@ -23,6 +23,14 @@ export const metadata: Metadata = {
     default: 'First Cloud Solutions – AWS Cloud Consulting',
     template: '%s | First Cloud Solutions',
   },
+  icons: {
+  icon: [
+    { url: '/favicon.ico', sizes: 'any' },
+    { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+  ],
+  apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  shortcut: '/favicon.ico',
+},
   description:
     'AWS Cloud and DevOps consulting for mid-size and large organisations. Cloud security transformation, large-scale migrations, Kubernetes platform engineering, and AI/ML integration on AWS.',
   keywords: [
