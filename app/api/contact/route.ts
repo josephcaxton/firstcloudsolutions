@@ -3,7 +3,7 @@ import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 
 // SES client — uses IAM role in Amplify, env vars locally
 const ses = new SESClient({
-  region: process.env.AWS_REGION ?? 'eu-west-2',
+  region: process.env.AWS_REGION ?? 'eu-west-1',
 });
 
 function sanitize(str: string): string {
