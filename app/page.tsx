@@ -261,7 +261,7 @@ export default function Home() {
                 AI into your platform — let&apos;s have a direct conversation.
               </p>
               <div className={styles.contactDetails}>
-                <a href="mailto:josephcaxtonidowu@yahoo.com">josephcaxtonidowu@yahoo.com</a>
+                <a href="mailto:joseph@firstcloudsolutions.net">joseph@firstcloudsolutions.net</a>
                 <a href="https://linkedin.com/in/josephcaxton" target="_blank" rel="noopener noreferrer">
                   linkedin.com/in/josephcaxton
                 </a>
