@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   shortcut: '/favicon.ico',
 },
   description:
-    'AWS Cloud and DevOps consulting for mid-size and large organisations. Cloud security transformation, large-scale migrations, Kubernetes platform engineering, and AI/ML integration on AWS.',
+    'Forward Deployed AI & Cloud Engineering — embedding within enterprise teams to integrate AWS Bedrock, LangChain agentic workflows, and RAG pipelines into production. Over 10+ years across financial services, EdTech, and technology.',
   keywords: [
     'AWS consulting',
     'cloud security',
@@ -44,6 +44,10 @@ export const metadata: Metadata = {
     'Terraform',
     'EKS',
     'cloud transformation',
+    'forward deployed engineering',
+    'agentic workflows',
+    'RAG pipelines',
+    'prompt engineering',
   ],
   authors: [{ name: 'Joseph Caxton-Idowu' }],
   creator: 'Joseph Caxton-Idowu',
@@ -54,7 +58,7 @@ export const metadata: Metadata = {
     siteName: 'First Cloud Solutions',
     title: 'First Cloud Solutions – AWS Cloud Consulting',
     description:
-      'AWS Cloud and DevOps consulting. Over ten years of enterprise delivery across financial services, media, and technology.',
+      'Forward Deployed AI & Cloud Engineering. Over ten years of enterprise delivery across financial services, media, and technology.',
   },
   twitter: {
     card: 'summary_large_image',
