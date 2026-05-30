@@ -31,9 +31,9 @@ const services = [
   },
   {
     num: '05',
-    title: 'AI & ML Integration on AWS',
-    body: 'Hands-on implementation of AI-augmented data pipelines, RAG architectures, and agentic workflows for production environments. Practical experience integrating AWS Bedrock and SageMaker into mission-critical platforms such as payment gateways.',
-    tags: ['AWS Bedrock', 'SageMaker', 'LangChain / LangGraph', 'RAG pipelines', 'Python / Boto3'],
+    title: 'Forward Deployed AI Engineering',
+    body: 'Embedding directly within your product and engineering teams to turn AI capability into working operational reality. From redesigning workflows around AWS Bedrock and LangGraph agents to real-time prompt architecture for live applications — this is hands on delivery, not advisory.',
+    tags: ['AWS Bedrock', 'SageMaker', 'LangChain / LangGraph', 'RAG pipelines', 'Agentic Workflows', 'Prompt Engineering', 'Workflow Re-engineering'],
   },
   {
     num: '06',
@@ -56,8 +56,8 @@ const approach = [
   },
   {
     num: '03',
-    title: 'Deliver alongside your team',
-    body: 'I work embedded, not at arm\'s length. Whether that means pairing with your engineers, leading a workstream, or owning a delivery end-to-end — I adapt to what the engagement needs.',
+    title: 'Forward Deployed Delivery',
+    body: 'I work embedded within your team, not at arm\'s length. Whether pairing with engineers, leading a workstream, or owning AI integration end-to-end, forward deployment means your AI capability lands in production, not a slide deck.',
   },
   {
     num: '04',
@@ -84,9 +84,9 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className={styles.hero}>
         <div className={styles.heroLeft}>
-          <p className={styles.eyebrow}>AWS Cloud &amp; Security Consulting</p>
+          <p className={styles.eyebrow}>Forward Deployed AI & Cloud Engineering</p>
           <h1 className={styles.heroH1}>
-            Where <em>cloud security</em> meets delivery at scale
+            Embedded delivery for organisations <em>integrating AI</em> into mission-critical cloud platforms.
           </h1>
           <p className={styles.heroSub}>
             AWS consulting for organisations navigating complex cloud transformation,
@@ -105,6 +105,13 @@ export default function Home() {
             <div className={styles.statLabel}>
               <strong>Years of enterprise cloud delivery</strong>
               Financial services, media, technology, and public sector
+            </div>
+          </div>
+          <div className={styles.statCard}>
+            <div className={styles.statNum}>8+</div>
+            <div className={styles.statLabel}>
+              <strong>Years forward deploying into enterprise teams</strong>
+              Financial services, EdTech, and technology
             </div>
           </div>
           <div className={styles.statCard}>
@@ -159,10 +166,10 @@ export default function Home() {
             <div className={`${styles.aboutLeft} reveal`}>
               <p className="section-tag">About</p>
               <div className={styles.aboutIdentity}>
-                Joseph<br />Caxton-Idowu<br /><em>Senior AWS Cloud<br />&amp; DevOps Engineer</em>
+                Joseph<br />Caxton-Idowu<br /><em>Forward Deployed AI<br />&amp; Cloud Engineer</em>
               </div>
               <ul className={styles.clientList}>
-                {['Barclaycard via Avanade', 'eBay Kleinanzeigen via Deloitte', 'Barclays Bank', 'Deloitte ITS Cloud UK', 'BBC · TfL · Sky', 'Bauer Media · Provident Financial'].map((c) => (
+                {['Barclaycard via Avanade', 'eBay Kleinanzeigen via Deloitte', 'Barclays Bank', 'Deloitte ITS Cloud UK','LearnersCloud', 'BBC · TfL · Sky', 'Bauer Media · Provident Financial'].map((c) => (
                   <li key={c}>{c}</li>
                 ))}
               </ul>
@@ -181,11 +188,12 @@ export default function Home() {
                 cloud-native architectures.
               </p>
               <p>
-                At Barclaycard, I built AI-augmented data pipelines using AWS Bedrock, SageMaker, and RAG
-                architecture directly into a mission critical payment gateway. At eBay Kleinanzeigen via
-                Deloitte, I led the migration of 60+ applications from three European data centres into AWS,
-                maintaining 99.9% availability throughout. At Barclays Bank, I delivered SOC2 audit readiness
-                and AWS Control Tower with OKTA integration across the enterprise.
+                More recently, my focus has shifted to forward deployed AI engineering — embedding within enterprise 
+                product and operations teams to design agentic workflows, RAG pipelines, and prompt architectures 
+                that connect advanced AI capability directly to business processes. At LearnersCloud, I re-engineered a 
+                passive video platform into an adaptive, AI-driven learning application with real-time student profiling 
+                and automated remediation. At Barclaycard via Avanade, I led the integration of AI-augmented pipelines 
+                into a mission-critical payment gateway.
               </p>
               <p>
                 I hold five AWS certifications — DevOps Engineer Professional, Solutions Architect Professional,
@@ -196,8 +204,9 @@ export default function Home() {
                 {[
                   { label: 'Cloud & IaC', items: 'AWS (extensive), Azure, Terraform, CloudFormation, Helm' },
                   { label: 'Containers & Platform', items: 'Kubernetes (EKS), Docker, OpenShift, Fargate, Rancher' },
-                  { label: 'AI & ML', items: 'AWS Bedrock, SageMaker, RAG, LangChain/LangGraph' },
+                  { label: 'AI & ML', items: 'AWS Bedrock, SageMaker, RAG, LangChain/LangGraph, Agentic Workflows, RAG Pipelines, Prompt Engineering' },
                   { label: 'Security', items: 'Control Tower, KMS, Secrets Manager, OKTA, IAM, CIS' },
+                  { label: 'Consulting & Delivery', items: 'Forward Deployment, Workflow Re-engineering, Stakeholder Engagement, Cross-Functional Leadership, TCO & Capacity Planning' },
                 ].map((g) => (
                   <div key={g.label} className={styles.skillGroup}>
                     <div className={styles.skillLabel}>{g.label}</div>
