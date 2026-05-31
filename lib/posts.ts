@@ -3,6 +3,12 @@ import path from 'path'
 import matter from 'gray-matter'
 
 const postsDir = path.join(process.cwd(), 'posts')
+type PostMeta = {
+  title: string
+  date: string
+  excerpt: string
+  slug: string
+}
 
 export function getAllPosts() {
   const files = fs.readdirSync(postsDir)
@@ -11,7 +17,12 @@ export function getAllPosts() {
     .map(filename => {
       const raw = fs.readFileSync(path.join(postsDir, filename), 'utf8')
       const { data } = matter(raw)
-      return { ...data, slug: data.slug || filename.replace('.mdx', '') }
+      return {
+        title: data.title,
+        date: data.date,
+        excerpt: data.excerpt,
+        slug: data.slug || filename.replace('.mdx', '')
+      } as PostMeta
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
