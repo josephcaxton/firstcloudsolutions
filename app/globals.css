@@ -137,3 +137,94 @@ h1, h2, h3, h4 {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
+/* ── Blog ── */
+.blog-index { padding: clamp(4rem, 8vw, 7rem) 0; }
+
+.post-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--paper-2);
+}
+
+.post-card:first-of-type { border-top: 1px solid var(--paper-2); }
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-tag {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--paper-2);
+  color: var(--ink-3);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.post-date { font-size: 0.8rem; color: var(--ink-3); }
+
+.post-title {
+  font-family: var(--ff-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 0.6rem;
+}
+
+.post-title em { font-style: italic; color: var(--accent); }
+
+.post-excerpt {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.read-link:hover { text-decoration: underline; }
+
+.post-number {
+  font-family: var(--ff-display);
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--paper-2);
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Single post ── */
+.post-body { max-width: 640px; }
+.post-body p { font-size: 1rem; line-height: 1.8; color: var(--ink-2); margin-bottom: 1.5rem; }
+.post-body h2 { font-family: var(--ff-display); font-size: 1.4rem; font-weight: 300; letter-spacing: -0.02em; margin: 2.5rem 0 0.75rem; }
+.post-body h2 em { font-style: italic; color: var(--accent); }
+
+.pullquote {
+  border-left: 2px solid var(--accent);
+  padding: 0.75rem 1.5rem;
+  margin: 2rem 0;
+  font-family: var(--ff-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.5;
+}
