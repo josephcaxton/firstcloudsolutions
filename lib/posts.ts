@@ -8,6 +8,7 @@ type PostMeta = {
   date: string
   excerpt: string
   slug: string
+  tags: string[] 
 }
 
 export function getAllPosts() {
@@ -21,7 +22,8 @@ export function getAllPosts() {
         title: data.title,
         date: data.date,
         excerpt: data.excerpt,
-        slug: data.slug || filename.replace('.mdx', '')
+        slug: data.slug || filename.replace('.mdx', ''),
+        tags: data.tags ?? [],
       } as PostMeta
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
