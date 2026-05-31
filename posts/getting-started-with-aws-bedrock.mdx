@@ -1,0 +1,124 @@
+---
+title: "Getting Started with AWS Bedrock"
+date: "2026-06-01"
+excerpt: "A straightforward blueprint for going from zero to your first API call on AWS Bedrock — the serverless supermarket for enterprise-grade foundational models."
+slug: "getting-started-with-aws-bedrock"
+tags: ["AWS", "Bedrock", "AI Engineering", "Python"]
+---
+
+If you want to build generative AI applications at the enterprise level, managing separate vendor APIs, worrying about data privacy, and wrestling with raw GPU infrastructure gets old fast.
+
+**AWS Bedrock** solves this. It acts as a single, unified, serverless API "supermarket" for world-class foundational models — Anthropic's Claude, Meta's Llama, Amazon Nova, and Mistral. Best of all, it keeps your data entirely within your secure AWS compliance boundary.
+
+Here is your straightforward blueprint to get from zero to your first API call.
+
+---
+
+## The Checklist Before You Code
+
+Before writing a single line of Python, you have to cross two classic AWS hurdles: **Regions** and **Model Access**.
+
+### Step 1: Pick the Right Region
+
+Bedrock is fully serverless, but model availability varies by region. If you want access to the latest cutting-edge models, stick to the major hubs:
+
+- `us-east-1` (N. Virginia)
+- `us-west-2` (Oregon)
+- `eu-west-1` (Ireland)
+
+### Step 2: Unlock the Models
+
+By default, an AWS account has **zero** models active. You have to explicitly request access — don't worry, this is free; you only pay for actual inference tokens.
+
+1. Go to the **Amazon Bedrock Console**.
+2. Scroll to the bottom of the left sidebar and click **Model access**.
+3. Click **Manage model access**.
+4. Check the boxes for the models you want (e.g., Anthropic Claude, Amazon Nova, Meta Llama) and click **Save changes**.
+5. Most requests grant instantly, though some frontier models take a few minutes to show as *Available*.
+
+> **IAM note:** Ensure your active IAM user or role has `bedrock:InvokeModel` and `bedrock:ListFoundationModels` permissions attached, or your code will throw a `403 AccessDeniedException`.
+
+---
+
+## Testing in the Sandbox: The Playgrounds
+
+Before writing scripts, head over to the **Playgrounds** tab in the Bedrock sidebar (Text, Image, or Chat).
+
+It works exactly like a consumer AI chat interface. Select your model, type a prompt, and tweak parameters like **Temperature** (higher = more creative/random) and **Top P** without writing a line of code. It's the fastest way to baseline which model fits your budget and use case.
+
+---
+
+## Writing Your First Script: The Boto3 Way
+
+AWS's official Python SDK is `boto3`. Make sure your AWS CLI is configured (`aws configure`) and the library is installed:
+
+```bash
+pip install boto3
+```
+
+Here is a minimalist script to invoke a model via Bedrock's serverless runtime:
+
+```python
+import boto3
+import json
+
+# 1. Initialise the Bedrock runtime client
+# Ensure your region matches where you granted model access
+bedrock_runtime = boto3.client(
+    service_name="bedrock-runtime",
+    region_name="us-east-1"
+)
+
+# 2. Define the model ID and your prompt
+model_id = "anthropic.claude-3-5-sonnet-v2"
+prompt = "Explain quantum computing in one sentence for a product manager."
+
+# 3. Format the request body
+# Note: different providers (Anthropic, Meta, Amazon) expect slightly different JSON schemas
+body = json.dumps({
+    "anthropic_version": "bedrock-2023-05-31",
+    "max_tokens": 200,
+    "messages": [
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ],
+    "temperature": 0.5
+})
+
+try:
+    # 4. Invoke the model
+    response = bedrock_runtime.invoke_model(
+        body=body,
+        modelId=model_id,
+        accept="application/json",
+        contentType="application/json"
+    )
+
+    # 5. Parse and print the response
+    response_body = json.loads(response.get("body").read())
+    text_output = response_body["content"][0]["text"]
+    print(f"AI Response:\n{text_output}")
+
+except Exception as e:
+    print(f"Error invoking model: {e}")
+```
+
+---
+
+## Why Enterprises Choose Bedrock
+
+Once you move past basic API calls, Bedrock earns its place in production for three key reasons:
+
+**The Privacy Wall** — Your prompts and organisational data never leave your VPC. AWS contractually guarantees your data is never used to train the underlying public baseline models.
+
+**Knowledge Bases (Native RAG)** — Point a Knowledge Base at an S3 bucket full of corporate PDFs or sync it to a vector database. Bedrock handles text chunking, embedding generation, and vector ingestion out of the box — no custom pipeline to maintain.
+
+**Intelligent Prompt Routing** — Bedrock's native cost-routing automatically evaluates incoming prompts, sending simpler queries to cheap, fast models and complex logic to frontier engines. This alone can cut monthly inference bills by up to 30%.
+
+---
+
+## Next Steps
+
+Look into **Cross-Region Inference**. It automatically load-balances your API calls across multiple data centres if your primary region hits capacity — a lifesaver when you're running an application facing real, unpredictable user traffic.
