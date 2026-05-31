@@ -79,7 +79,11 @@ export default function BlogPage() {
                   </div>
 
                   {/* Title */}
-                  <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none' }}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    style={{ textDecoration: 'none' }}
+                    className="post-title-link"
+                  >
                     <h2 style={{
                       fontFamily: 'var(--ff-display)',
                       fontSize: 'clamp(1.2rem, 2vw, 1.5rem)',
@@ -89,10 +93,7 @@ export default function BlogPage() {
                       color: 'var(--ink)',
                       marginBottom: '0.6rem',
                       transition: 'color 0.2s',
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
-                    onMouseLeave={e => (e.currentTarget.style.color = 'var(--ink)')}
-                    >
+                    }}>
                       {post.title}
                     </h2>
                   </Link>
