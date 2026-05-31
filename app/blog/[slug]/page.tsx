@@ -3,6 +3,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+import remarkGfm from 'remark-gfm'
 
 export async function generateStaticParams() {
   const posts = getAllPosts()
@@ -78,7 +79,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
 
           {/* Post body */}
           <div style={{ maxWidth: '680px' }} className="post-body">
-            <MDXRemote source={content} />
+            <MDXRemote source={content} options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }} />
           </div>
 
           {/* Tags footer */}
