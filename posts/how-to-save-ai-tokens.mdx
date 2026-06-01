@@ -1,0 +1,90 @@
+---
+title: "How to Save AI Tokens"
+date: "2026-06-02"
+excerpt: "Build production grade AI agents without burning through your token budget. Strategies for minimizing token overhead in enterprise grade agentic workflows."
+slug: "how-to-save-ai-tokens"
+tags: ["Token Management", "AI Engineering", "Enterprise AI", "LLMOps", "CostOptimization"]
+---
+# Agentic AI: How to Save on Tokens
+
+The secret of building production grade autonomous agents is that they are absolute token incinerators. 
+
+In a standard chatbot architecture, one user request equals one API call. In an **agentic workflow**, one user request can quietly trigger a multi step loop of 10, 20, or 50 model calls as the agent reasons, invokes tools, analyzes errors, and retries. Because LLM APIs are stateless, **every single step resends the entire history, system prompt, and tool schema**. 
+
+If you don't optimize, a single debugging or automation session can easily scale your costs by 10x to 100x. GitHub recently tackled this head-on, sharing how they slashed their own internal agent token spend by **up to 62%**. 
+
+Here is how you can implement a "Tokenmaxxing" strategy to stop wasting money without degrading your agent's intelligence.
+
+---
+
+## 1. Aggressively Prune Your Tool Manifests
+The **Model Context Protocol (MCP)** and native function-calling are incredible, but they come with a heavy tax. Every time you expose a tool to an agent, you are injecting its JSON parameters and text descriptions into the system prompt.
+
+If your agent has access to an MCP server or utility library with 30 distinct tools, it's carrying roughly 3,000 to 5,000 tokens of schema *on every single turn*, even if it only uses one tool.
+
+* **Implement Lazy Loading / Routing:** Don't give every agent every tool. Use a cheap router model to analyze the user's intent first, and then only inject the tool schemas relevant to that specific task domain (e.g., if the user asks about a database, drop the email and weather tools from the context).
+* **Compress Manifests:** Write precise, hyper-dense tool descriptions. Use shorter parameter names (`q` instead of `search_query_string`) and strip out optional fields from the base schema definitions.
+
+---
+
+## 2. Enforce Strict Context Compaction (Pruning)
+As an agent cycles through a loop, the context window accumulates tool execution outputs, stack traces, and reasoning paths. If an agent reads a 2,000-line log file to fix a bug, that log file gets re-sent to the API over and over again on steps 3, 4, and 5.
+
+```
+[Step 1 Input] -> System Prompt + Tool Schema + User Query
+[Step 2 Input] -> System Prompt + Tool Schema + User Query + Step 1 Output + Tool Result
+[Step 3 Input] -> System Prompt + Tool Schema + User Query + Step 1 & 2 Output + Tool Results (Snowball Effect!)
+```
+
+* **Summarize the Past:** Implement an automated compaction step. Instead of appending raw tool results verbatim, have a cheaper model summarize previous tool responses into highly dense key-value pairs (e.g., `User Preference: Budget < $1000, OS: Linux`). 
+* **Filter at the Server Level:** If an agent queries a database or a GitHub PR API, don't let the server return the entire JSON payload. Use server-side projection to strip away metadata, timestamps, and author profiles, returning **only** the exact lines or values the agent asked for.
+
+---
+
+## 3. Maximize Native Prompt Caching
+Major LLM providers (including Anthropic, OpenAI, and DeepSeek) offer **Prompt Caching**. This allows the provider to cache static parts of your prompt on their servers, charging you up to **90% less** for cache hits.
+
+Because agent loops resend the exact same system instructions, tool definitions, and early conversation history repeatedly, they are the absolute perfect use case for caching.
+
+* **Structure Wisely:** Place your most static content (System Prompt -> Tool Definitions -> Core Data Documents) at the **very beginning** of the payload. Put the fast changing variables (the latest tool output or user message) at the very end. If a single token changes at the beginning of a text block, the entire subsequent cache invalidates.
+
+---
+
+## 4. Implement Model Cascading and Tiered Routing
+Not every step in an agentic workflow requires an expensive "frontier" model like GPT-4o or Claude 3.5 Sonnet. 
+
+```
+                       [ Incoming Task ]
+                              │
+                              ▼
+                ( Router: Light & Cheap Model )
+                 /            │             \
+                /             │              \
+      [ Simple Request ] [ Medium Complexity ] [ High-Level Reasoning ]
+              │               │                       │
+              ▼               ▼                       ▼
+       ( Flash Model )  ( Haiku Tier )         ( Frontier Model )
+```
+
+Use a **tiered routing architecture**:
+1. **The Grunt Work (Flash / Haiku models):** Use fast, sub dollar per million token models for syntax parsing, formatting raw tool inputs, routing, or summarizing log outputs.
+2. **The Brain Work (Frontier models):** Reserve your expensive reasoning engines exclusively for the abstract steps like initial planning, evaluating final success, or writing complex code blocks.
+
+---
+
+## 5. Put Hard Governance Guardrails in Production
+Runaway loops happen. If an agent gets stuck in an error correction loop (e.g., trying to execute a command, failing, and trying the exact same failing command again), it can burn through hundreds of dollars in minutes.
+
+Never deploy an autonomous agent without hard boundaries:
+* **The Step Cap:** Set a strict limit on the maximum number of turns an agent can take (e.g., `max_loops = 30`). If it doesn't solve the issue by then, force a hard exit and escalate to a human.
+* **Semantic Caching:** Before hitting the LLM, check a vector database cache to see if the exact same sub task or tool failure has already been evaluated and resolved earlier in the cluster.
+* **Token Budgeting:** Track token consumption dynamically *during the runtime execution*. If a single workflow run crosses a threshold (like $2.00), temporarily throttle the model down to a cheaper tier or pause for human approval.
+
+---
+
+## Take Control of Your Agent Costs Today
+
+Stop letting autonomous loops drain your AI budget. Building efficient AI doesn't mean compromising on intelligence, it means building smarter architectures. 
+
+**Ready to optimize your production workflows?** 
+Share these optimisation principles with your engineering team, and audit your agent's tool manifests before your next deployment!
