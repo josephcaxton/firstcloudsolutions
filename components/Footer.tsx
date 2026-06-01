@@ -14,6 +14,7 @@ export default function Footer() {
         <Link href="/#services">Services</Link>
         <Link href="/#about">About</Link>
         <Link href="/#contact">Contact</Link>
+        <Link href="/privacy">Privacy Policy</Link>
         <a href="https://linkedin.com/in/josephcaxton" target="_blank" rel="noopener noreferrer">
           LinkedIn
         </a>

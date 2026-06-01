@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import ContactForm from '@/components/ContactForm';
 import ScrollReveal from '@/components/ScrollReveal';
 import styles from './page.module.css';
+import Image from 'next/image';
 
 const services = [
   {
@@ -165,11 +166,28 @@ export default function Home() {
           <div className={styles.aboutGrid}>
             <div className={`${styles.aboutLeft} reveal`}>
               <p className="section-tag">About</p>
+              <div style={{
+                width: '100%',
+                maxWidth: '320px',
+                marginBottom: '2rem',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '1px solid var(--paper-2)',
+              }}>
+                <Image
+                  src="/images/joseph-caxton-idowu.jpg"
+                  alt="Joseph Caxton-Idowu — Forward Deployed AI & Cloud Engineer"
+                  width={320}
+                  height={380}
+                  style={{ width: '100%', objectFit: 'cover', height: 'auto', display: 'block' }}
+                  priority
+                />
+              </div>
               <div className={styles.aboutIdentity}>
                 Joseph<br />Caxton-Idowu<br /><em>Forward Deployed AI<br />&amp; Cloud Engineer</em>
               </div>
               <ul className={styles.clientList}>
-                {['Barclaycard via Avanade', 'eBay Kleinanzeigen via Deloitte', 'Barclays Bank', 'Deloitte ITS Cloud UK','LearnersCloud', 'BBC · TfL · Sky', 'Bauer Media · Provident Financial'].map((c) => (
+                {['Barclaycard via Avanade', 'eBay Kleinanzeigen via Deloitte', 'Barclays Bank', 'Deloitte ITS Cloud UK', 'LearnersCloud', 'BBC · TfL · Sky', 'Bauer Media · Provident Financial'].map((c) => (
                   <li key={c}>{c}</li>
                 ))}
               </ul>
@@ -188,11 +206,11 @@ export default function Home() {
                 cloud-native architectures.
               </p>
               <p>
-                More recently, my focus has shifted to forward deployed AI engineering — embedding within enterprise 
-                product and operations teams to design agentic workflows, RAG pipelines, and prompt architectures 
-                that connect advanced AI capability directly to business processes. At LearnersCloud, I re-engineered a 
-                passive video platform into an adaptive, AI-driven learning application with real-time student profiling 
-                and automated remediation. At Barclaycard via Avanade, I led the integration of AI-augmented pipelines 
+                More recently, my focus has shifted to forward deployed AI engineering — embedding within enterprise
+                product and operations teams to design agentic workflows, RAG pipelines, and prompt architectures
+                that connect advanced AI capability directly to business processes. At LearnersCloud, I re-engineered a
+                passive video platform into an adaptive, AI-driven learning application with real-time student profiling
+                and automated remediation. At Barclaycard via Avanade, I led the integration of AI-augmented pipelines
                 into a mission-critical payment gateway.
               </p>
               <p>
