@@ -11,6 +11,7 @@ function sanitize(str: string): string {
 }
 
 export async function POST(req: NextRequest) {
+  console.log('reCAPTCHA secret key:', process.env.RECAPTCHA_SECRET_KEY)
   // Rate-limit hint: add API Gateway throttling on Amplify if you see spam
   const { name, email, company, message, recaptchaToken } = await req.json();
   // Verify reCAPTCHA token
