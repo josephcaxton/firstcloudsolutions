@@ -2,17 +2,26 @@
 
 import { useState } from 'react';
 import styles from './ContactForm.module.css';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus('loading');
     setErrorMsg('');
+
+    if (!executeRecaptcha) {
+      setStatus('error');
+      setErrorMsg('reCAPTCHA not ready. Please refresh and try again.');
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha('contact_form');
 
     const form = e.currentTarget;
     const data = {
@@ -20,6 +29,7 @@ export default function ContactForm() {
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
       company: (form.elements.namedItem('company') as HTMLInputElement).value,
       message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+      recaptchaToken,
     };
 
     try {

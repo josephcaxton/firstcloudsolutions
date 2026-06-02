@@ -13,7 +13,25 @@ function sanitize(str: string): string {
 export async function POST(req: NextRequest) {
   // Rate-limit hint: add API Gateway throttling on Amplify if you see spam
   const { name, email, company, message } = await req.json();
+  // Verify reCAPTCHA token
+  const recaptchaRes = await fetch(
+    `https://www.google.com/recaptcha/api/siteverify`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`,
+    }
+  );
+  const recaptchaData = await recaptchaRes.json();
 
+  // Score is between 0 (bot) and 1 (human) — 0.5 is a safe threshold
+  if (!recaptchaData.success || recaptchaData.score < 0.5) {
+    return Response.json(
+      { error: 'reCAPTCHA verification failed' },
+      { status: 400 }
+    )
+  }
+  
   // Basic validation
   if (!name || !email || !message) {
     return NextResponse.json({ error: 'Name, email, and message are required.' }, { status: 400 });
