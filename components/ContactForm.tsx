@@ -15,6 +15,8 @@ export default function ContactForm() {
     e.preventDefault();
     setStatus('loading');
     setErrorMsg('');
+    
+    const form = e.currentTarget;
 
     if (!executeRecaptcha) {
       setStatus('error');
@@ -23,7 +25,7 @@ export default function ContactForm() {
     }
     const recaptchaToken = await executeRecaptcha('contact_form');
 
-    const form = e.currentTarget;
+    
     const data = {
       name: (form.elements.namedItem('name') as HTMLInputElement).value,
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
