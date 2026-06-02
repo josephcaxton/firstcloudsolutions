@@ -15,6 +15,7 @@
     "next-mdx-remote": "^6.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-google-recaptcha-v3": "^1.11.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
