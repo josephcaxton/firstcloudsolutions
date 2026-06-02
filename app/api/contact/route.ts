@@ -11,7 +11,6 @@ function sanitize(str: string): string {
 }
 
 export async function POST(req: NextRequest) {
-  console.log('reCAPTCHA secret key:', process.env.RECAPTCHA_SECRET_KEY)
   // Rate-limit hint: add API Gateway throttling on Amplify if you see spam
   const { name, email, company, message, recaptchaToken } = await req.json();
   // Verify reCAPTCHA token
@@ -24,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
   );
   const recaptchaData = await recaptchaRes.json();
-  console.log('reCAPTCHA score:', recaptchaData.score)
+
   // Score is between 0 (bot) and 1 (human) — 0.5 is a safe threshold
   if (!recaptchaData.success || recaptchaData.score < 0.9) {
     return Response.json(
