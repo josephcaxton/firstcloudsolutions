@@ -12,7 +12,7 @@ function sanitize(str: string): string {
 
 export async function POST(req: NextRequest) {
   // Rate-limit hint: add API Gateway throttling on Amplify if you see spam
-  const { name, email, company, message } = await req.json();
+  const { name, email, company, message, recaptchaToken } = await req.json();
   // Verify reCAPTCHA token
   const recaptchaRes = await fetch(
     `https://www.google.com/recaptcha/api/siteverify`,
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     )
   }
-  
+
   // Basic validation
   if (!name || !email || !message) {
     return NextResponse.json({ error: 'Name, email, and message are required.' }, { status: 400 });
