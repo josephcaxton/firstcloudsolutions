@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     template: '%s | First Cloud Solutions',
   },
   icons: {
-  icon: [
-    { url: '/favicon.ico', sizes: 'any' },
-    { url: '/icon.png', type: 'image/png', sizes: '512x512' },
-  ],
-  apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
-  shortcut: '/favicon.ico',
-},
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: '/favicon.ico',
+  },
   description:
     'Forward Deployed AI & Cloud Engineering — embedding within enterprise teams to integrate AWS Bedrock, LangChain agentic workflows, and RAG pipelines into production. Over 10+ years across financial services, EdTech, and technology.',
   keywords: [
@@ -83,9 +83,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
-      <RecaptchaProvider>
-        <body>{children}<CookieBanner /></body>
-      </RecaptchaProvider>
+
+      <body>
+        <RecaptchaProvider>
+          {children}<CookieBanner />
+        </RecaptchaProvider></body>
+
     </html>
   );
 }
