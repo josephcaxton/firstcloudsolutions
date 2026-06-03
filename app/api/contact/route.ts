@@ -23,6 +23,9 @@ export async function POST(req: NextRequest) {
     }
   );
   const recaptchaData = await recaptchaRes.json();
+  console.log('reCAPTCHA full result:', JSON.stringify(recaptchaData));
+  console.log('token received:', recaptchaToken ? 'yes' : 'no');
+  console.log('secret key loaded:', process.env.RECAPTCHA_SECRET_KEY ? 'yes' : 'no');
 
   // Score is between 0 (bot) and 1 (human) — 0.5 is a safe threshold
   if (!recaptchaData.success || recaptchaData.score < 0.5) {
@@ -42,13 +45,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Please provide a valid email address.' }, { status: 400 });
   }
 
-  const safeName    = sanitize(name);
-  const safeEmail   = sanitize(email);
+  const safeName = sanitize(name);
+  const safeEmail = sanitize(email);
   const safeCompany = company ? sanitize(company) : 'Not provided';
   const safeMessage = sanitize(message);
 
   const fromEmail = process.env.SES_FROM_EMAIL;
-  const toEmail   = process.env.SES_TO_EMAIL;
+  const toEmail = process.env.SES_TO_EMAIL;
 
   if (!fromEmail || !toEmail) {
     console.error('SES environment variables missing: SES_FROM_EMAIL or SES_TO_EMAIL');
