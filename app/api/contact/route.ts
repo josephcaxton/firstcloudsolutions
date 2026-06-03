@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   console.log('secret key loaded:', process.env.RECAPTCHA_SECRET_KEY ? 'yes' : 'no');
 
   // Score is between 0 (bot) and 1 (human) — 0.5 is a safe threshold
-  if (!recaptchaData.success || recaptchaData.score < 0.9) {
+  if (!recaptchaData.success || recaptchaData.score < 1.0) {
     return Response.json(
       { error: 'reCAPTCHA verification failed' },
       { status: 400 }
