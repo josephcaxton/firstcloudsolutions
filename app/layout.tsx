@@ -4,6 +4,7 @@ import { DM_Sans } from 'next/font/google';
 import './globals.css';
 import CookieBanner from '@/components/CookieBanner';
 import RecaptchaProvider from '@/components/RecaptchaProvider';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -85,6 +86,7 @@ export default function RootLayout({
     <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
 
       <body>
+        <GoogleAnalytics />
         <RecaptchaProvider>
           {children}<CookieBanner />
         </RecaptchaProvider></body>
