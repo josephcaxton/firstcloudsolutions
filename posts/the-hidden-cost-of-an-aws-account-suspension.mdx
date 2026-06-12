@@ -1,0 +1,42 @@
+---
+title: "The Hidden Cost of an AWS Account Suspension: A Tale of Resource Corruption"
+date: "2026-06-12"
+excerpt: "We all know that keeping a tight grip on cloud spend is vital, especially for startups in the pre-revenue phase. Over the last two and a half years, I’ve been helping a startup build their platform on a lean budget. Recently, they hit a temporary roadblock: due to a billing oversight, their AWS account was suspended for non-payment."
+slug: "the-hidden-cost-of-an-aws-account-suspension"
+tags: ["AWS Account Suspension", "Cloud Architecture", "Cloud Computing", "Startups", "Terraform", "DevOps"]
+---
+# The Hidden Cost of an AWS Account Suspension: A Tale of Resource Corruption
+
+We all know that keeping a tight grip on cloud spend is vital, especially for startups in the pre-revenue phase. Over the last two and a half years, I’ve been helping a startup build their platform on a lean budget. Recently, they hit a temporary roadblock: due to a billing oversight, their AWS account was suspended for non-payment. 
+
+The outstanding balance was cleared within days, and we expected the environment to bounce back smoothly. Instead, we spent days dealing with resource corruption, silent failures, and undocumented behaviors. 
+
+Here is what happened, what we learned, and why AWS needs to improve their documentation on account restoration.
+
+---
+
+### 1. The Database: An Expected Recovery
+When we first logged back in, the Amazon RDS database was gone. However, AWS had automatically taken a final snapshot before termination. 
+* **The Fix:** This was entirely fair and expected. We restored the database from the snapshot and quickly aligned it with our Terraform state. So far, so good.
+
+### 2. The RDS Proxy: The "Suspended" Deadlock
+Things took a turn when we looked at the RDS Proxy fronting our database. The proxy status was stuck in `SUSPENDED`. 
+* **The Problem:** We modified the configuration to associate the proxy with the newly restored database, but the status refused to change. Developers couldn't log in, and all API calls failed. We re-ran our Terraform pipelines, but a `SUSPENDED` state completely locks down the resource configuration. AWS blocks all administrative changes during this state, and the automated AWS health check loop couldn't self-recover.
+* **The Fix:** With no option to modify or force-update the proxy, we had to completely tear down the broken proxy infrastructure and redeploy it from scratch using Terraform.
+
+### 3. The API Gateway & ACM: Silent Certificate Corruption
+Once the database and proxy were live, we thought we were out of the woods. Then the dev team reported a new error on API endpoints: `net::ERR_CERT_COMMON_NAME_INVALID`.
+
+* **The Problem:** Running `openssl s_client -connect <domain>:<port> -servername <domain>` revealed that the API Gateway was presenting the default `*.execute-api.eu-west-2.amazonaws.com` certificate instead of our custom domain certificate. 
+* **The Mystery:** We checked AWS Certificate Manager (ACM)—all certificates were present and marked healthy. We checked the API Gateway Custom Domain mappings—everything looked perfectly configured. There were absolutely no error flags in the AWS Console. 
+* **The Fix:** Because this legacy part of the infrastructure hadn't been fully migrated to Infrastructure as Code (IaC), we had to manually generate new certificates, re-verify them, and re-attach them to the custom domains. (On the bright side, we used this opportunity to officially bring these resources under Terraform management!)
+
+---
+
+### The Takeaway and Feedback for AWS
+
+While deleting an idle database during an account suspension is standard practice, **the silent corruption of dependent resources—like RDS Proxies and API Gateway custom domain mappings—is a massive pain point.** When an account is reactivated, you expect your configuration to return to its pre-suspension state. Instead, we faced broken underlying hooks with zero indication or error logs in the AWS Console to tell us *why* traffic was failing. 
+
+> **My Advice to AWS:** > Please update the official documentation regarding account suspension and reactivation. Customers need to be clearly informed about the potential side effects on stateful or mapped resources. Finding yourself in a debugging rabbit hole due to undocumented resource corruption is an exhausting experience for engineers and a costly one for startups.
+
+To my fellow cloud architects and DevOps engineers: If you ever have to recover an account from suspension, don't just look for missing resources—look for the "frozen" ones. And as always, make sure *everything* is in Terraform! 
