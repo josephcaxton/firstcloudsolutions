@@ -136,30 +136,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SERVICES ── */}
-      <section className={styles.servicesSection} id="services">
-        <div className="container">
-          <div className={`${styles.sectionHeader} reveal`}>
-            <p className="section-tag">What I do</p>
-            <h2 className="section-title">Consulting <em>services</em></h2>
-          </div>
-          <div className={styles.servicesGrid}>
-            {services.map((s) => (
-              <div key={s.num} className={`${styles.serviceCard} reveal`}>
-                <div className={styles.serviceNum}>{s.num}</div>
-                <h3 className={styles.serviceTitle}>{s.title}</h3>
-                <p className={styles.serviceBody}>{s.body}</p>
-                <div className={styles.serviceTags}>
-                  {s.tags.map((t) => (
-                    <span key={t} className={styles.serviceTag}>{t}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── ABOUT ── */}
       <section className={styles.aboutSection} id="about">
         <div className="container">
@@ -233,6 +209,30 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── SERVICES ── */}
+      <section className={styles.servicesSection} id="services">
+        <div className="container">
+          <div className={`${styles.sectionHeader} reveal`}>
+            <p className="section-tag">What I do</p>
+            <h2 className="section-title">Consulting <em>services</em></h2>
+          </div>
+          <div className={styles.servicesGrid}>
+            {services.map((s) => (
+              <div key={s.num} className={`${styles.serviceCard} reveal`}>
+                <div className={styles.serviceNum}>{s.num}</div>
+                <h3 className={styles.serviceTitle}>{s.title}</h3>
+                <p className={styles.serviceBody}>{s.body}</p>
+                <div className={styles.serviceTags}>
+                  {s.tags.map((t) => (
+                    <span key={t} className={styles.serviceTag}>{t}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
