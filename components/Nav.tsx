@@ -23,7 +23,7 @@ export default function Nav() {
       <ul className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
         <li><Link href="/#services" onClick={() => setMenuOpen(false)}>Services</Link></li>
         <li><Link href="/#about" onClick={() => setMenuOpen(false)}>About</Link></li>
-        <li><Link href="/blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+        <li><Link href="/blog" onClick={() => setMenuOpen(false)}>Blogs</Link></li>
         <li><Link href="/#approach" onClick={() => setMenuOpen(false)}>Approach</Link></li>
         <li>
           <Link href="/#contact" className={styles.cta} onClick={() => setMenuOpen(false)}>
