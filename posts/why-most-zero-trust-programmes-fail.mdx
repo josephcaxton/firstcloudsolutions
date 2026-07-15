@@ -1,0 +1,93 @@
+---
+title: "Why Most Zero Trust Programmes Fail: An Executive Guide to Risk-Led Security"
+date: "2026-07-15"
+excerpt: "Most Zero Trust initiatives do not fail because the underlying technical architecture is flawed. They fail because they are treated as **isolated technology projects** rather than **systemic risk management disciplines**.
+Many organisations invest heavily in micro-segmentation, identity-aware access, and continuous monitoring, only to find that their programs run over budget, fail to address critical compliance mandates, or decay over time. True Zero Trust requires a continuous bridge connecting **risk appetite** before implementation to **continuous governance** after completion."
+slug: "why-most-zero-trust-programmes-fail"
+tags: ["Zero Trust", "Executive Guide", "NIS2", "DORA", "UK Cyber Security and Resilience Bill"]
+---
+# Why Most Zero Trust Programmes Fail: An Executive Guide to Risk-Led Security
+
+*A summary and strategic briefing for CISOs, CIOs, and Risk Leaders.*
+
+---
+
+## Executive Summary
+
+Most Zero Trust initiatives do not fail because the underlying technical architecture is flawed. They fail because they are treated as **isolated technology projects** rather than **systemic risk management disciplines**. 
+
+Many organisations invest heavily in micro-segmentation, identity aware access, and continuous monitoring, only to find that their programs run over budget, fail to address critical compliance mandates, or decay over time. True Zero Trust requires a continuous bridge connecting **risk appetite** before implementation to **continuous governance** after completion.
+
+---
+
+## The Core Challenge: A Risk Problem in a Network Engineer’s Hat
+
+The technical components of Zero Trust such as micro-segmentation, identity-aware access, and encrypted traffic are widely agreed upon and mature. The real friction point is not the target architecture, but rather:
+* **Scope & Sequencing:** What to secure first, and to what level.
+* **Ownership:** Who maintains and governs the controls once the project team moves on.
+
+In a modern enterprise environment, the old idea of a trusted internal network and a defended perimeter has dissolved due to cloud adoption, hybrid work, and third party integrations. With average breach containment times exceeding 200 days and lateral movement being a standard attacker tactic, a flat network multiplies damage. Furthermore, modern regulatory frameworks like **NIS2**, **DORA**, and the **UK Cyber Security and Resilience Bill** demand continuous, granular evidence of security controls not just a one-off sign-off.
+
+---
+
+## Where Zero Trust Programmes Break
+
+Typically, standalone network initiatives run into two fatal failure modes:
+
+### 1. The "Segment Everything" Trap (Pre-Implementation)
+Without an upfront criticality assessment and risk appetite alignment, engineering teams default to treating all workloads identically. They apply the same stringent controls to a low-risk internal payroll reporting tool as they do to a high-risk treasury application. 
+* **The Result:** The programme becomes prohibitively expensive, slow, and burns through budget that should have been concentrated on securing critical business critical systems.
+
+### 2. The "Orphaned Control" (Post-Implementation)
+A technical team successfully delivers a working architecture, runs hypercare for two weeks, and closes the project. However, no operational team is assigned to turn the live monitoring data into audit-ready evidence or manage policy drift.
+* **The Result:** The controls are live but completely orphaned. Within six months, the architecture begins to decay as new exceptions and unvetted workloads are introduced.
+
+---
+
+## The Four-Phase Cyber Risk Management Framework
+
+To deliver lasting assurance, Zero Trust must be integrated into a broader, four-phase risk management lifecycle:
+
+| Phase | Focus Areas | Why It Matters for Zero Trust |
+| :--- | :--- | :--- |
+| **1. Discovery** | Risk appetite, current state assessment, governance landscape. | Establishes the business tolerances before a single policy is written. |
+| **2. Strategy & Design** | Risk roadmaps, policy frameworks, multi-domain technical designs. | Translates the risk appetite into architectural blueprints. |
+| **3. Implementation** | Technical build, segmentation, SOC & Ops alignment. | **The Zero Trust Sweet Spot.** The actual engineering and migration. |
+| **4. Operationalise** | Team enablement, ongoing governance, compliance evidencing. | Prevents policy decay and ensures compliance value is realised. |
+
+---
+
+## What Must Happen Before and After Technical Delivery
+
+### Before You Touch the Network: Criticality Assessments
+The highest leverage activity in any Zero Trust initiative is a business impact **criticality assessment** (evaluating confidentiality, integrity, and availability). 
+* A workload feeding financial reporting or highly regulated processes requires deep, robust segmentation.
+* An internal utility with no sensitive data can accept a lighter, more cost-effective touch. 
+This structured assessment (which typically takes only a day or two of stakeholder interviews) ensures your engineering budget is directed exactly where it matters most.
+
+### The Two-Stage Risk Approach during Delivery
+A robust delivery sequence requires two distinct risk milestones:
+1. **The Criticality Assessment:** Performed upfront to *scope the design* of the workload's blueprint.
+2. **The Post-Cutover Risk Assessment:** Performed immediately after migration to *verify actual implementation*, document any pre-production vulnerabilities, and check how the vulnerability baseline has shifted.
+
+### After Cutover: Operationalising & Embedding
+A successful Zero Trust implementation cannot simply be "handed over." To avoid policy decay and capture compliance benefits (e.g., under DORA or NIS2), organisations must establish:
+* **A Named Governance Forum:** To review policy drift and access controls on a set cadence.
+* **Continuous Compliance Evidencing:** Dedicated owners to translate monitoring logs into audit-ready evidence.
+* **Workload Onboarding Processes:** A strict pathway to ensure new applications undergo the same criticality-led vetting, preventing the architecture from degrading one exception at a time.
+
+---
+
+## Key Questions for the C-Suite
+
+When reviewing an upcoming Zero Trust proposal or business case, ask your delivery team or vendor these three questions:
+
+1. **"Does this plan begin with a business criticality and risk appetite assessment, or does it jump straight to architectural blueprints?"**
+   * *If they jump to design, you risk over-engineering low-risk apps and under-engineering high-risk ones.*
+2. **"Are there two distinct risk assessments, one to scope the design and a separate one post-cutover to verify the actual implementation?"**
+   * *Conflating these two assessments is a common delivery shortcut that erodes compliance assurance.*
+3. **"Who owns the governance forum and compliance evidencing once the implementation team demobilises?"**
+   * *If ownership isn't defined on day one, your expensive security controls will likely become orphaned and decay within a year.*
+
+### The Bottom Line
+Zero Trust is a powerful architecture, but its true value is unlocked when it is managed as an ongoing corporate discipline. Treated as a network project, it delivers segmentation. Treated as a risk management discipline, it delivers **board-level assurance and regulatory compliance**.
