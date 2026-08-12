@@ -1,0 +1,394 @@
+---
+title: "How to Use MCP in Kiro: A Practical Guide to Extending Your AI IDE"
+date: "2026-08-01"
+excerpt: "MCP (Model Context Protocol) is what transforms Kiro from a capable code editor into a workflow automation platform. This guide walks you through what MCP is, how to configure it in Kiro, and how to build real automations that connect your AI agent to external tools and services."
+slug: "how-to-use-mcp-in-kiro"
+tags: ["Kiro", "MCP", "Model Context Protocol", "AI IDE", "Developer Tools", "Workflow Automation", "AWS"]
+---
+# How to Use MCP in Kiro: A Practical Guide to Extending Your AI IDE
+
+Out of the box, Kiro can read and write files, run terminal commands, and navigate your codebase. Useful, but limited to whatever exists on your local machine. The moment you need Kiro to interact with external systems, query a database, search documentation, manage GitHub issues, or pull context from your project management tool, you need MCP.
+
+This guide covers everything: what MCP is, how to configure it, how to verify it works, and how to build real workflows that leverage it.
+
+---
+
+## What Is MCP?
+
+MCP stands for **Model Context Protocol**. It is an open source standard created by Anthropic that gives AI agents secure, structured access to external tools and data sources. Think of it as a universal adapter layer between Kiro's AI agent and the rest of your development ecosystem.
+
+Each MCP server is a lightweight process that runs on your local machine and exposes specific capabilities to Kiro. When Kiro needs information from an external system, it communicates with the relevant MCP server through standard input/output using a JSON-based request-response pattern.
+
+The architecture is straightforward:
+
+- **Kiro (MCP Client)** sends requests to MCP servers
+- **MCP Servers** run locally but can communicate with both local systems (databases, file systems) and remote services (GitHub, GitLab, Slack, AWS)
+- **External Services** respond through the MCP server back to Kiro
+
+Without MCP servers, Kiro is a powerful code editor with AI. With them, it becomes a platform that can orchestrate across your entire development toolchain.
+
+---
+
+## Prerequisites
+
+Before configuring MCP servers, ensure you have the following installed:
+
+### Python and uvx
+
+Most community MCP servers are distributed as Python packages and run via `uvx` (part of the `uv` package manager from Astral):
+
+```bash
+# Install uv (includes uvx)
+pip install uv
+
+# Verify
+uvx --version
+```
+
+If you use Homebrew:
+
+```bash
+brew install uv
+```
+
+Once `uv` is installed, `uvx` will download and run MCP servers without requiring server-specific installation.
+
+### Node.js 18+
+
+Some MCP servers are distributed as npm packages:
+
+```bash
+node --version
+# If needed: brew install node@22
+```
+
+### Docker (Optional)
+
+Some servers (like the official GitHub MCP server) run as Docker containers:
+
+```bash
+docker --version
+# Start Docker Desktop if not running
+```
+
+---
+
+## How MCP Configuration Works in Kiro
+
+Kiro reads MCP server configuration from JSON files at two levels:
+
+| Scope | File Location | Use Case |
+|---|---|---|
+| **User** (global) | `~/.kiro/settings/mcp.json` | Servers you want available across all projects |
+| **Workspace** (project) | `.kiro/settings/mcp.json` | Servers specific to a single project |
+
+Workspace-level configs override user-level configs. If a server is defined in both, the workspace version takes precedence.
+
+### Accessing the Configuration
+
+You can create or edit these files manually, or use Kiro's built-in UI:
+
+1. Click the **Kiro icon** in the activity bar
+2. Expand **MCP Servers**
+3. Click the **+** button or open either **Workspace Config** or **User Config**
+
+---
+
+## Configuring Your First MCP Server
+
+Here is a basic configuration file that sets up the AWS Documentation MCP server:
+
+```json
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false
+    }
+  }
+}
+```
+
+Save this to `~/.kiro/settings/mcp.json` and Kiro will start the server automatically.
+
+### Configuration Schema Explained
+
+Each server entry supports these fields:
+
+| Field | Required | Description |
+|---|---|---|
+| `command` | Yes | The executable to run (e.g., `uvx`, `npx`, `docker`, or a full binary path) |
+| `args` | Yes | Array of arguments passed to the command |
+| `env` | No | Environment variables passed to the server process |
+| `disabled` | No | Set to `true` to skip this server at startup |
+| `autoApprove` | No | Array of tool names that execute without prompting for approval |
+
+### Important: Full Paths
+
+Kiro does not inherit your shell's PATH variable. If a server binary is not available globally through `uvx` or `npx`, use the full absolute path:
+
+```bash
+# Find the path
+which my-mcp-server
+# Use the output in your config
+```
+
+---
+
+## Practical Examples: Common MCP Server Configurations
+
+### GitHub Integration
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server",
+        "stdio"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
+      },
+      "disabled": false
+    }
+  }
+}
+```
+
+This gives Kiro access to your repositories, issues, pull requests, and notifications.
+
+### Git Operations
+
+```json
+{
+  "mcpServers": {
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": ["git_status", "git_log", "git_diff"]
+    }
+  }
+}
+```
+
+### Web Content Fetching
+
+```json
+{
+  "mcpServers": {
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": ["fetch"]
+    }
+  }
+}
+```
+
+### Filesystem Access
+
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/directory"],
+      "env": {},
+      "disabled": false
+    }
+  }
+}
+```
+
+### A Combined Configuration
+
+Here is a real-world `~/.kiro/settings/mcp.json` with multiple servers:
+
+```json
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "uvx",
+      "args": ["awslabs.aws-documentation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": ["fetch"]
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": ["git_status", "git_log", "git_diff"]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run", "-i", "--rm",
+        "-e", "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server",
+        "stdio"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_your_token_here"
+      },
+      "disabled": false
+    }
+  }
+}
+```
+
+---
+
+## Verifying Your MCP Connection
+
+After saving your configuration:
+
+1. **Wait 15-20 seconds** for Kiro to detect the change and start the servers
+2. **Check the MCP Servers panel** in the Kiro sidebar. Connected servers show a green indicator.
+3. **Test in chat.** Ask Kiro something that requires the MCP server:
+
+For AWS Docs:
+> "Search the AWS documentation for how to configure an S3 bucket policy"
+
+For GitHub:
+> "List my open pull requests"
+
+For Git:
+> "What's the git status of this repository?"
+
+If you get real data back, the connection is working.
+
+### Reconnecting Without Restart
+
+If you update your MCP configuration, Kiro detects the change and reconnects automatically. You do not need to restart the IDE. If a server fails to reconnect, use the MCP Servers panel to manually restart it.
+
+---
+
+## Troubleshooting
+
+Access MCP logs at: **View > Output > "Kiro - MCP Logs"**
+
+| Symptom | Likely Cause | Fix |
+|---|---|---|
+| Server shows "not connected" | Binary path incorrect | Run `which <binary>` and update the config with the full path |
+| `ENOENT` error in logs | Command not found | Ensure `uvx`, `npx`, or Docker is installed and accessible |
+| `401 Unauthorized` | Token expired or missing | Regenerate your API token and update the `env` field |
+| Server connects but tools fail | Missing permissions on token | Verify your token has the required scopes (e.g., `repo` for GitHub) |
+| Node.js not found by server | Node not in the server's PATH | Add Node's bin directory to the `env.PATH` field |
+
+---
+
+## Building Workflows with MCP
+
+Once your MCP servers are connected, the real value emerges when you combine them with Kiro's other features.
+
+### Using MCP with Steering Files
+
+Create a steering file at `.kiro/steering/daily-workflow.md`:
+
+```markdown
+---
+inclusion: auto
+---
+
+## Daily Development Workflow
+
+When the user says "morning sync", follow these steps:
+
+1. Use the git MCP server to check the status of the current repository.
+2. Use the GitHub MCP server to list open pull requests assigned to me.
+3. Summarise any PRs that need my review today.
+4. List any failing CI checks on my open PRs.
+```
+
+This creates a repeatable automation triggered by a natural language command.
+
+### Using MCP with Spec-Driven Development
+
+MCP servers become especially powerful in Kiro's spec workflow. For example, if you use GitLab or GitHub for issue tracking:
+
+1. Configure the relevant MCP server
+2. Open a Spec session in Kiro
+3. Tell Kiro: "Create requirements documents for all open issues in this repository"
+4. Kiro uses the MCP server to fetch the issues, then generates structured requirements, design documents, and task lists
+
+This bridges your project management tool directly into Kiro's structured development workflow without any context switching.
+
+### Using MCP with Hooks
+
+Combine MCP with agent hooks for event-driven automation:
+
+```json
+{
+  "version": "v1",
+  "hooks": [{
+    "name": "Check GitHub CI on Save",
+    "trigger": "PostFileSave",
+    "matcher": "\\.(ts|py)$",
+    "action": {
+      "type": "agent",
+      "prompt": "Use the GitHub MCP server to check if there are any failing CI checks on the current branch. If there are, summarise them briefly."
+    }
+  }]
+}
+```
+
+---
+
+## Security Considerations
+
+A few important practices when working with MCP:
+
+- **Never commit `mcp.json` files containing tokens to version control.** Add `~/.kiro/settings/mcp.json` to your global `.gitignore` and `.kiro/settings/mcp.json` to your project `.gitignore`.
+- **Use minimal token scopes.** Only grant the permissions each MCP server actually needs.
+- **Rotate tokens regularly.** Set calendar reminders to regenerate tokens every 90 days.
+- **Use `disabled: true` for servers you are not actively using.** Fewer running servers means fewer potential failure points and faster IDE startup.
+- **Review `autoApprove` carefully.** Only auto-approve read operations. Keep write operations (creating issues, pushing commits, deleting resources) behind manual approval.
+
+---
+
+## Finding More MCP Servers
+
+The MCP ecosystem is growing rapidly. Community-built servers cover dozens of integrations:
+
+- **[MCP Server Registry on GitHub](https://github.com/modelcontextprotocol/servers)** — the official repository of reference implementations
+- **[Kiro MCP Documentation](https://kiro.dev/docs/mcp/)** — official docs covering configuration, authentication, and enterprise governance
+- **[Model Context Protocol Specification](https://modelcontextprotocol.io)** — the open standard specification
+
+If no existing server meets your needs, you can build your own. Kiro itself can help you scaffold a custom MCP server through its spec-driven development workflow.
+
+---
+
+## Summary
+
+MCP transforms Kiro from a local coding assistant into a connected development platform. The setup is straightforward:
+
+1. Install `uv` (for `uvx`) and optionally Docker
+2. Create `~/.kiro/settings/mcp.json` with your server configurations
+3. Verify connections through the MCP Servers panel and chat
+4. Combine MCP with steering files, specs, and hooks to build real workflows
+
+The key insight: MCP servers are not just about giving Kiro more information. They are about giving Kiro the ability to *act* across your development ecosystem, querying, creating, updating, and orchestrating, all directed by your judgment and intent.
+
+Start with one server. Get it working. Then expand from there.
