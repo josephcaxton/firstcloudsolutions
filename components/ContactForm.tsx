@@ -89,7 +89,7 @@ export default function ContactForm() {
 
       {status === 'success' && (
         <p className={styles.success}>
-          ✓ Message sent. I'll be in touch within one business day.
+          ✓ Message sent. I&apos;ll be in touch within one business day.
         </p>
       )}
       {status === 'error' && (

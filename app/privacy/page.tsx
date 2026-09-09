@@ -29,7 +29,7 @@ export default function PrivacyPage() {
                             <h2>How we use your data</h2>
                             <p>Your contact form data is sent directly to us via AWS Simple Email Service and is not stored in any database. We use it only to respond to your message and will never share it with third parties or use it for marketing without your explicit consent.</p>
                             <p>This website uses Google reCAPTCHA v3 to protect the contact form from spam.
-                                Google's <a href="https://policies.google.com/privacy">privacy policy</a> applies
+                                Google&apos;s <a href="https://policies.google.com/privacy">privacy policy</a> applies
                                 to data collected by reCAPTCHA.</p>
 
                             <h2>Cookies</h2>
