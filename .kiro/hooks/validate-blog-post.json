@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Validate Blog Post Frontmatter",
+      "trigger": "PostFileCreate",
+      "matcher": "firstcloudsolutions/posts/.*\\.mdx$",
+      "action": {
+        "type": "agent",
+        "prompt": "A new MDX blog post was created in firstcloudsolutions/posts/. Verify it follows the blog authoring rules: it must open with a frontmatter block between --- markers containing title, date (YYYY-MM-DD), excerpt (under ~30 words), slug, and tags (array). The slug must match the filename without .mdx and be unique across /posts/. If anything is missing or malformed, fix it and explain what you changed."
+      }
+    }
+  ]
+}
