@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Production Build Check",
+      "trigger": "Stop",
+      "action": {
+        "type": "agent",
+        "prompt": "If you made code changes to the firstcloudsolutions website this turn, run `npm run build --prefix firstcloudsolutions` to confirm the production build still passes before finishing. Skip this if you only edited docs, steering, or MDX content and made no code changes."
+      }
+    }
+  ]
+}
