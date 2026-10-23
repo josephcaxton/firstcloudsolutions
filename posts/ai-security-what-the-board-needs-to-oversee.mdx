@@ -1,0 +1,57 @@
+---
+title: "AI Security: What the Board Needs to Oversee as the Organisation Adopts AI"
+date: "2026-10-22"
+excerpt: "An article for board members on the security risks that come with adopting AI, the standards that help manage them, and the questions leadership should put to management."
+slug: "ai-security-what-the-board-needs-to-oversee"
+tags: ["AI Governance", "Regulation", "AI Security", "Board Advisory"]
+---
+
+Organisations across the UK and EU are adding artificial intelligence to products, customer services and internal operations. Each new AI system expands the attack surface and introduces failure modes that older security controls were not designed to catch. The board carries accountability for how the organisation manages this risk, so directors need enough understanding to challenge management and set direction.
+
+This article explains what makes AI security distinct, which authoritative standards help manage it, and what leadership should require as adoption grows.
+
+## Why AI changes the security picture
+
+An AI system behaves differently from conventional software. Its behaviour depends on the data it was trained on, the inputs it receives in use, and the way its outputs feed into other systems. The UK National Cyber Security Centre describes cyber security as a precondition for the safety, resilience, privacy and reliability of AI systems, which makes security a precondition for any AI decision from the outset.
+
+Several risks follow from how these systems work. Where a model accepts untrusted input, an attacker can craft that input to manipulate the model's output, a technique the security community calls prompt injection. Where training data can be influenced by outsiders, the data itself can be poisoned so the model learns the wrong patterns. Where a model has access to sensitive data, its responses can reveal that data to users who should not see it. The OWASP Top 10 for Large Language Model Applications sets out these and other risks as a shared reference for teams building on large language models.
+
+## The standards that help manage it
+
+Three sources give the board a defensible basis for oversight.
+
+The NIST AI Risk Management Framework, published in January 2023, is a voluntary framework for building trustworthiness into the design, development, use and evaluation of AI systems. It describes trustworthy AI through characteristics that include being secure and resilient, privacy-enhanced, accountable and transparent, and it organises risk work around the functions of governing, mapping, measuring and managing AI risk.
+
+The NCSC and the United States Cybersecurity and Infrastructure Security Agency, with international partners, published Guidelines for secure AI system development in November 2023. The guidelines cover four areas of the AI life cycle: secure design, secure development, secure deployment, and secure operation and maintenance. They apply to any provider of a system that uses AI, whether built from scratch or built on tools and services from others.
+
+The OWASP Top 10 for Large Language Model Applications gives engineering teams a current, community-maintained taxonomy of the most critical risks in applications that use large language models. It is a practical companion to the two frameworks above.
+
+Where management can show its AI work maps to these standards, the board has evidence that security has been considered across the whole life cycle.
+
+## What leadership should require
+
+The board does not need to design controls, but it can require management to demonstrate a small number of things.
+
+Management should maintain an inventory of where AI is used across the organisation, including systems bought from suppliers and features switched on inside existing products. Without an inventory, the organisation cannot know what it is accountable for.
+
+Each AI use should carry a threat model that considers how an attacker could manipulate inputs, corrupt training or fine-tuning data, or extract sensitive information. The NCSC guidelines place this threat modelling in the secure design stage, alongside functionality and user experience.
+
+Access controls must preserve each user's permissions when an AI system retrieves or generates information, so that the system does not expose data a user has no right to see. This is a capability to establish and test, confirmed through review, not a property that can be assumed.
+
+Supplier AI deserves the same scrutiny as supplier software. Where a third party provides a model or an AI feature, the organisation should understand what data the supplier processes, how the model is updated, and what the supplier commits to on security.
+
+## Questions for the board
+
+- Do we have a current inventory of every AI system in use, including supplier-provided features?
+- Which recognised framework does management use to govern AI risk, and can they show how our systems map to it?
+- Has each significant AI use been threat modelled, and when was that last reviewed?
+- How do we confirm that AI systems respect each user's data access permissions?
+- What would tell us an AI system had been manipulated or was behaving outside expected limits?
+- How do we assess the security of AI we buy or embed from third parties?
+- Who owns AI security risk at executive level, and how does that risk reach the board?
+
+## References
+
+- NIST, Artificial Intelligence Risk Management Framework (AI RMF 1.0), January 2023. https://www.nist.gov/itl/ai-risk-management-framework
+- NCSC and CISA, Guidelines for secure AI system development, November 2023. https://www.ncsc.gov.uk/collection/guidelines-secure-ai-system-development
+- OWASP, Top 10 for Large Language Model Applications. https://owasp.org/www-project-top-10-for-large-language-model-applications/
